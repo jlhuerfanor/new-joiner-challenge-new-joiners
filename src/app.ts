@@ -1,33 +1,37 @@
 import 'reflect-metadata';
 import { InversifyExpressServer } from 'inversify-express-utils';
 import { Container } from "inversify";
-import express from 'express';
 import * as bodyParser from "body-parser";
-import { TYPES } from "./types";
 import helmet from 'helmet';
+import cors from 'cors';
+import { TYPES } from './types';
+import { GlobalConfig } from './infrastructure/global.config';
 import './controller/status.controller';
 
-let serverPort = 8080;
-let container = new Container();
+const serverPort: number = Number(process.env.PORT) || 3000;
+const container = new Container();
 
-// container.bind<StatusController>(TYPES.StatusController).to(StatusController);
-// Configure container here
 
-const app = express();
-let server = new InversifyExpressServer(container, null, { rootPath: '/wap/new-joiners' }, app);
+container.bind<GlobalConfig>(TYPES.GlobalConfig).to(GlobalConfig);
+container.get<GlobalConfig>(TYPES.GlobalConfig)
+    .configure(container);
+
+const server = new InversifyExpressServer(
+    container,
+    null,
+    { rootPath: '/wap/new-joiners' });
 
 server.setConfig((app) => {
-    app.use(bodyParser.urlencoded({ extended: true }));
-    app.use(bodyParser.json);
+    // app.use(bodyParser.urlencoded({ extended: true }));
+    app.use(bodyParser.json());
+    app.use(cors());
     app.use(helmet())
 });
 
-let configuredApp = server.build();
-
-let serve = configuredApp.listen(serverPort, '0.0.0.0',() => {
-    console.log('boo');
-    // @ts-ignore
-    console.log(`App running on ${serve.address().port}`);
+const configuredApp = server.build();
+const serve = configuredApp.listen(
+    serverPort, '0.0.0.0',() => {
+    console.log(`App running on ${serverPort}`);
 })
 
-exports = module.exports = app;
+exports = module.exports = configuredApp;
