@@ -4,14 +4,21 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "postinstall": "npm run build",
+    "watch-node": "nodemon dist/app.js",
+    "watch-ts": "tsc -w",
     "build": "npx tsc",
+    "start": "node dist/app.js",
     "test": "npm run build && mocha -r ts-node/register 'test/**/*.spec.ts'",
-    "coverage": "nyc -r lcov -e .ts -x \"*.spec.ts\" npm run test"
+    "coverage": "nyc -r lcov -e .ts -x \"*.spec.ts\" npm run test",
+    "deploy": "git push heroku"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "amqplib": "^0.7.1",
+    "bluebird": "^3.7.2",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",
@@ -33,6 +40,7 @@
     "@types/sinon": "^9.0.11",
     "@typescript-eslint/eslint-plugin": "^4.17.0",
     "@typescript-eslint/parser": "^4.17.0",
+    "amqp-ts": "^1.8.0",
     "chai": "^4.3.3",
     "eslint": "^7.21.0",
     "mocha": "^8.3.1",
