@@ -17,16 +17,11 @@ pipelines:
                 - npm install
                 - npm test
           - step:
-              name: Assemble
-              script:
-                - git archive --format=tar.gz master -o new-joiners.tar.gz
-              artifacts:
-                - new-joiners.tar.gz
-          - step:
               name: Deploy to production
               deployment: production
               trigger: manual
               script:
+                - git archive --format=tar.gz master -o new-joiners.tar.gz
                 - pipe: atlassian/heroku-deploy:1.2.1
                   variables:
                     HEROKU_API_KEY: $HEROKU_API_KEY
@@ -35,4 +30,6 @@ pipelines:
                     WAIT: 'true' 
                     # Optional.
                     # DEBUG: '<boolean>' # Optional
+              artifacts:
+                - new-joiners.tar.gz
 
