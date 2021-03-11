@@ -11,7 +11,14 @@ describe('MongoDbProvider', function () {
                 url: process.env.TEST_MONGO_URL || 'mongodb://localhost:27017/new_joiners',
                 database: 'new_joiners'
             },
-            server: { port: 1 }
+            server: { port: 1 },
+            amqp: {
+                defaultTopic: '',
+                queueTopicPattern: '',
+                queueName: '',
+                exchangeName: '',
+                url: ''
+            }
         };
         const provider = new MongoDbProvider(parameters);
         try {
@@ -38,7 +45,14 @@ describe('MongoDbProvider', function () {
                 url: process.env.TEST_MONGO_URL || 'mongodb://localhost:3000/new_joiners',
                 database: 'new_joiners'
             },
-            server: { port: 1 }
+            server: { port: 1 },
+            amqp: {
+                defaultTopic: '',
+                queueTopicPattern: '',
+                queueName: '',
+                exchangeName: '',
+                url: ''
+            }
         };
         const provider = new MongoDbProvider(parameters);
 
