@@ -1,0 +1,37 @@
+#  Template NodeJS build
+
+#  This template allows you to validate your NodeJS code.
+#  The workflow allows running tests and code linting on the default branch.
+
+image: node:10.15.3
+
+pipelines:
+  branches:
+    master:
+      - parallel:
+          - step:
+              name: Build and Test
+              caches:
+                - node
+              script:
+                - npm install
+                - npm test
+          - step:
+              name: Assemble
+              script:
+                - git archive --format=tar.gz master -o new-joiners.tar.gz
+              artifacts:
+                - new-joiners.tar.gz
+          - step:
+              name: Deploy to production
+              deployment: production
+              script:
+                - pipe: atlassian/heroku-deploy:1.2.1
+                  variables:
+                    HEROKU_API_KEY: $HEROKU_API_KEY
+                    HEROKU_APP_NAME: 'new-joiners'
+                    ZIP_FILE: 'new-joiners.tar.gz'
+                    WAIT: 'true' 
+                    # Optional.
+                    # DEBUG: '<boolean>' # Optional
+
