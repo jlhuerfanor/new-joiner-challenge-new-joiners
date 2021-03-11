@@ -14,7 +14,7 @@ const parameters: Parameters = {
         port: Number(process.env.PORT) || 3000
     },
     mongo: {
-        url: 'mongodb://localhost:27017/new_joiners',
+        url: 'mongodb://app_newjoiners:AbszOb80XbdlDum94cZp@localhost:27017/new_joiners',
         database: 'new_joiners'
     }
 };

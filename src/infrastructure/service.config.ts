@@ -8,7 +8,9 @@ import {MongoDbProvider} from '../service/implementation/mongo-db.provider';
 @injectable()
 export class ServiceConfig implements Configuration {
     public configure(container: Container): void {
-        container.bind<MongoDbProvider>(TYPES.MongoDbProvider).to(MongoDbProvider);
+        container.bind<MongoDbProvider>(TYPES.MongoDbProvider)
+            .to(MongoDbProvider)
+            .onActivation((context, injectable1) => injectable1.init());
         container.bind<StatusService>(TYPES.StatusService).to(DefaultStatusService);
     }
 }
