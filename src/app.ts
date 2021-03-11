@@ -7,11 +7,21 @@ import cors from 'cors';
 import { TYPES } from './types';
 import { GlobalConfig } from './infrastructure/global.config';
 import './controller/status.controller';
+import {Parameters} from './model/parameters';
 
-const serverPort: number = Number(process.env.PORT) || 3000;
+const parameters: Parameters = {
+    server: {
+        port: Number(process.env.PORT) || 3000
+    },
+    mongo: {
+        url: 'mongodb://localhost:27017/new_joiners',
+        database: 'new_joiners'
+    }
+};
+
 const container = new Container();
 
-
+container.bind<Parameters>(TYPES.Parameters).toConstantValue(parameters);
 container.bind<GlobalConfig>(TYPES.GlobalConfig).to(GlobalConfig);
 container.get<GlobalConfig>(TYPES.GlobalConfig)
     .configure(container);
@@ -30,8 +40,8 @@ server.setConfig((app) => {
 
 const configuredApp = server.build();
 const serve = configuredApp.listen(
-    serverPort, '0.0.0.0',() => {
-    console.log(`App running on ${serverPort}`);
+    parameters.server.port, '0.0.0.0',() => {
+    console.log(`App running on ${parameters.server.port}`);
 })
 
 exports = module.exports = configuredApp;
