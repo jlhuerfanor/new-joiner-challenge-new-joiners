@@ -1,4 +1,7 @@
 export const TYPES = {
+    Parameters: Symbol('Parameters'),
+
+    MongoDbProvider: Symbol('MongoDbProvider'),
 
     GlobalConfig: Symbol('GlobalConfig'),
     ServiceConfig: Symbol('ServiceConfig'),

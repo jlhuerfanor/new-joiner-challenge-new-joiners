@@ -1,6 +1,6 @@
 import {Configuration} from './configuration';
 import {Container, inject, injectable} from 'inversify';
-import {ServiceConfig} from './serviceConfig';
+import {ServiceConfig} from './service.config';
 import {BusinessConfig} from './business.config';
 import {TYPES} from '../types';
 
