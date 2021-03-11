@@ -8,6 +8,7 @@ import { TYPES } from './types';
 import { GlobalConfig } from './infrastructure/global.config';
 import './controller/status.controller';
 import {Parameters} from './model/parameters';
+import {MessageQueueService} from './service/api/message-queue.service';
 
 const parameters: Parameters = {
     server: {
@@ -16,6 +17,13 @@ const parameters: Parameters = {
     mongo: {
         url: 'mongodb://app_newjoiners:AbszOb80XbdlDum94cZp@localhost:27017/new_joiners',
         database: 'new_joiners'
+    },
+    amqp: {
+        url: 'amqps://jmodcbnq:y9TkU5HAx6xp6cHod7Gv1lfUwe0vevIF@woodpecker.rmq.cloudamqp.com/jmodcbnq',
+        exchangeName: 'profile-exchange',
+        queueName: 'profile-reader-queue',
+        queueTopicPattern: 'joiner.profile.new',
+        defaultTopic: 'joiner.profile.amend'
     }
 };
 
@@ -23,8 +31,9 @@ const container = new Container();
 
 container.bind<Parameters>(TYPES.Parameters).toConstantValue(parameters);
 container.bind<GlobalConfig>(TYPES.GlobalConfig).to(GlobalConfig);
-container.get<GlobalConfig>(TYPES.GlobalConfig)
-    .configure(container);
+
+container.get<GlobalConfig>(TYPES.GlobalConfig).configure(container);
+container.get<MessageQueueService>(TYPES.MessageQueueService);
 
 const server = new InversifyExpressServer(
     container,
