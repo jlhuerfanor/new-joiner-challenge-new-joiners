@@ -2,9 +2,12 @@ export interface Parameters {
     server: {
         port: number
     },
-    mongo: {
-        url: string,
-        database: string
+    postgres: {
+        host: string,
+        port: number,
+        database: string,
+        username: string,
+        password: string
     },
     amqp: {
         url: string,

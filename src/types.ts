@@ -1,14 +1,16 @@
 export const TYPES = {
     Parameters: Symbol('Parameters'),
 
-    MongoDbProvider: Symbol('MongoDbProvider'),
-    MessageQueueService: Symbol('MessageQueueService'),
-
     GlobalConfig: Symbol('GlobalConfig'),
+    PersistenceConfig: Symbol('PersistenceConfig'),
     ServiceConfig: Symbol('ServiceConfig'),
     BusinessConfig: Symbol('BusinessConfig'),
 
+    ProfileRepository: Symbol('ProfileRepository'),
+
+    MessageQueueService: Symbol('MessageQueueService'),
+    ProfileRepositoryService: Symbol('ProfileRepositoryService'),
     StatusService: Symbol('StatusService'),
-    StatusBusiness: Symbol('StatusBusiness'),
-    StatusController: Symbol('StatusController')
+
+    StatusBusiness: Symbol('StatusBusiness')
 };
