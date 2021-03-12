@@ -10,8 +10,10 @@ export const TYPES = {
 
     MessageQueueService: Symbol('MessageQueueService'),
     ProfileRepositoryService: Symbol('ProfileRepositoryService'),
+    ProfileQueryService: Symbol('ProfileQueryService'),
     StatusService: Symbol('StatusService'),
 
     StatusBusiness: Symbol('StatusBusiness'),
-    CreateProfileBusiness: Symbol('CreateProfileBusiness')
+    CreateProfileBusiness: Symbol('CreateProfileBusiness'),
+    UpdateProfileBusiness: Symbol('UpdateProfileBusiness')
 };
