@@ -42,7 +42,7 @@ export class AmqpMessageQueueService implements MessageQueueService {
         const profile: Profile = message;
 
         this.profileRepositoryService.persist(profile)
-            .then((result) => console.log(`Profile persisted in DB. ${result}`))
+            .then((result) => console.log(`Profile persisted in DB. id = ${result.id}`))
             .catch((error) => console.log(error));
     }
 
