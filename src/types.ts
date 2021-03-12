@@ -12,5 +12,6 @@ export const TYPES = {
     ProfileRepositoryService: Symbol('ProfileRepositoryService'),
     StatusService: Symbol('StatusService'),
 
-    StatusBusiness: Symbol('StatusBusiness')
+    StatusBusiness: Symbol('StatusBusiness'),
+    CreateProfileBusiness: Symbol('CreateProfileBusiness')
 };

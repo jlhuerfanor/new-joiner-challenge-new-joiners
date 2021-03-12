@@ -4,6 +4,7 @@ import {ServiceConfig} from './service.config';
 import {BusinessConfig} from './business.config';
 import {TYPES} from '../types';
 import {PersistenceConfig} from './persistence.config';
+import {MessageQueueService} from '../service/api/message-queue.service';
 
 @injectable()
 export class GlobalConfig implements Configuration {
@@ -13,6 +14,8 @@ export class GlobalConfig implements Configuration {
         container.get<PersistenceConfig>(TYPES.PersistenceConfig).configure(container);
         container.get<ServiceConfig>(TYPES.ServiceConfig).configure(container);
         container.get<BusinessConfig>(TYPES.BusinessConfig).configure(container);
+
+        container.get<MessageQueueService>(TYPES.MessageQueueService);
     }
 
     private static bindModules(container: Container) {

@@ -6,12 +6,13 @@ import helmet from 'helmet';
 import cors from 'cors';
 import { TYPES } from './types';
 import { GlobalConfig } from './infrastructure/global.config';
-import './controller/status.controller';
 import {Parameters} from './model/parameters';
-import {MessageQueueService} from './service/api/message-queue.service';
 import {Connection, createConnections} from 'typeorm';
 import {Profile} from './model/profile';
 import {Application} from 'express';
+
+import './controller/status.controller';
+import './controller/joiner.controller'
 
 const parameters: Parameters = {
     server: {
@@ -67,7 +68,6 @@ class ApplicationServer {
         container.bind<GlobalConfig>(TYPES.GlobalConfig).to(GlobalConfig);
 
         container.get<GlobalConfig>(TYPES.GlobalConfig).configure(container);
-        container.get<MessageQueueService>(TYPES.MessageQueueService);
 
         const server = new InversifyExpressServer(
             container,
