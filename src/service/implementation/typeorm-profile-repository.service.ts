@@ -5,7 +5,7 @@ import {inject, injectable} from 'inversify';
 import {TYPES} from '../../types';
 
 @injectable()
-export class PostgresProfileRepositoryService implements ProfileRepositoryService {
+export class TypeormProfileRepositoryService implements ProfileRepositoryService {
     public repository: Repository<Profile>;
 
     constructor(
@@ -16,5 +16,10 @@ export class PostgresProfileRepositoryService implements ProfileRepositoryServic
 
     persist(profile: Profile): Promise<Profile> {
         return this.repository.save(profile);
+    }
+
+    update(idNumber: number, profile: Profile): Promise<Profile | undefined> {
+        return this.repository.update({ idNumber: idNumber }, profile)
+            .then(result => this.repository.findOne({ idNumber: idNumber }));
     }
 }

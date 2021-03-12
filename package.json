@@ -10,7 +10,7 @@
     "build": "npx tsc",
     "start": "node dist/app.js",
     "test": "npm run build && mocha -r ts-node/register 'test/**/*.spec.ts'",
-    "coverage": "nyc -r lcov -e .ts -x \"*.spec.ts\" npm run test",
+    "coverage": "nyc -a -r lcov -e .ts -n \"src/**/*.ts\" -x \"test/**/*.spec.ts\" npm run test",
     "deploy": "git push heroku"
   },
   "keywords": [],
