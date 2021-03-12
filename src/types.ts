@@ -15,5 +15,6 @@ export const TYPES = {
 
     StatusBusiness: Symbol('StatusBusiness'),
     CreateProfileBusiness: Symbol('CreateProfileBusiness'),
-    UpdateProfileBusiness: Symbol('UpdateProfileBusiness')
+    UpdateProfileBusiness: Symbol('UpdateProfileBusiness'),
+    GetProfileBusiness: Symbol('GetProfileBusiness')
 };

@@ -27,6 +27,12 @@ export class TypeormProfileQueryService implements ProfileQueryService {
             .catch(() => Promise.reject(TypeormProfileQueryService.ERROR_PROFILE_NOT_FOUND_BY_ID_NUMBER));
     }
 
+    getByIdNumber(idNumber: number): Promise<Profile | undefined> {
+        return this.repository.findOne({ where: { idNumber: idNumber }});
+    }
+
     public static get ERROR_DUPLICATED_ID_NUMBER():string { return 'Duplicated id number.'; }
     public static get ERROR_PROFILE_NOT_FOUND_BY_ID_NUMBER():string { return 'Profile with given id number does not exists.'; }
+
+
 }

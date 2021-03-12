@@ -105,5 +105,38 @@ describe('TypeormProfileQueryService', function () {
                 return Promise.resolve();
             });
     });
+    it("getAProfileByIdNumber", function () {
+        const expectedProfile: Profile = <Profile>{ idNumber: 1 };
+        const repository = <Repository<Profile>> {
+            findOne(id?: string | number | Date | ObjectID, options?: FindOneOptions<Profile>): Promise<Profile | undefined> {
+                return Promise.resolve(expectedProfile)
+            }
+        };
+        const profileQueryService = new TypeormProfileQueryService(repository);
+
+        const findCall = sinon.spy(repository, 'findOne');
+
+        return profileQueryService.getByIdNumber(1)
+            .then((value) => {
+                sinon.assert.calledOnce(findCall);
+                expect(value).to.be.eq(expectedProfile);
+            });
+    });
+    it("getUndefinedByIdNumber", function () {
+        const repository = <Repository<Profile>> {
+            findOne(id?: string | number | Date | ObjectID, options?: FindOneOptions<Profile>): Promise<Profile | undefined> {
+                return Promise.resolve(undefined)
+            }
+        };
+        const profileQueryService = new TypeormProfileQueryService(repository);
+
+        const findCall = sinon.spy(repository, 'findOne');
+
+        return profileQueryService.getByIdNumber(1)
+            .then((value) => {
+                sinon.assert.calledOnce(findCall);
+                expect(value).to.be.undefined;
+            });
+    });
 
 });
