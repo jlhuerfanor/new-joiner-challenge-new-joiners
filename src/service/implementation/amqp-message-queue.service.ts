@@ -4,6 +4,7 @@ import {Parameters} from '../../model/parameters';
 import {inject, injectable} from 'inversify';
 import {TYPES} from '../../types';
 import {Profile} from '../../model/profile';
+import {ProfileRepositoryService} from '../api/profile-repository.service';
 
 @injectable()
 export class AmqpMessageQueueService implements MessageQueueService {
@@ -11,11 +12,15 @@ export class AmqpMessageQueueService implements MessageQueueService {
     private exchange: Amqp.Exchange;
     private queue: Amqp.Queue;
     private parameters: Parameters;
+    private profileRepositoryService: ProfileRepositoryService;
 
     constructor(
-        @inject(TYPES.Parameters) params: Parameters
+        @inject(TYPES.Parameters) params: Parameters,
+        @inject(TYPES.ProfileRepositoryService) profileRepositoryService: ProfileRepositoryService
     ) {
         this.parameters = params;
+        this.profileRepositoryService = profileRepositoryService;
+
         this.connection = new Amqp.Connection(params.amqp.url);
         this.exchange = this.connection.declareExchange(params.amqp.exchangeName, 'topic', { durable: true, noCreate: true });
         this.queue = this.connection.declareQueue(params.amqp.queueName, { durable: true, noCreate: true });
@@ -35,7 +40,10 @@ export class AmqpMessageQueueService implements MessageQueueService {
 
     consume(message: any): void {
         const profile: Profile = message;
-        console.log(profile);
+
+        this.profileRepositoryService.persist(profile)
+            .then((result) => console.log(`Profile persisted in DB. ${result}`))
+            .catch((error) => console.log(error));
     }
 
     private process(message: Amqp.Message) {
