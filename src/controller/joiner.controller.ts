@@ -27,7 +27,7 @@ export class JoinerController {
     public addProfile(@request() request: Request, @response() response: Response): Promise<void> {
         return this.createProfileBusiness.create(request.body)
             .then(() => { response.sendStatus(204); })
-            .catch((error) => { response.status(400).json(this.errorBody(request.path, 400, error)) });
+            .catch((error) => { response.status(400).json(JoinerController.errorBody(request.path, 400, error)) });
     }
 
     @httpPatch('')
@@ -35,17 +35,24 @@ export class JoinerController {
         const profileUpdate: ProfileUpdate = request.body;
         return this.updateProfileBusiness.update(profileUpdate.idNumber, profileUpdate.value)
             .then(() => { response.sendStatus(204); })
-            .catch((error) => { response.status(400).json(this.errorBody(request.path, 400, error)) });
+            .catch((error) => { response.status(400).json(JoinerController.errorBody(request.path, 400, error)) });
     }
 
     @httpGet('/:id')
     public getProfile(@request() request: Request, @response() response: Response, @requestParam('id') idNumber: string) {
         return this.getProfileBusiness.getByIdNumber(Number(idNumber))
             .then((value) => { response.status(200).json(value); })
-            .catch((error) => { response.status(400).json(this.errorBody(request.path, 400, error)) });
+            .catch((error) => { response.status(400).json(JoinerController.errorBody(request.path, 400, error)) });
     }
 
-    private errorBody(path: string, status: number, message: any): any {
+    @httpGet('')
+    public getIdNumberList(@request() request: Request, @response() response: Response) {
+        return this.getProfileBusiness.getIdNumberList()
+            .then((value) => { response.status(200).json(value); })
+            .catch((error) => { response.status(400).json(JoinerController.errorBody(request.path, 400, error)) });
+    }
+
+    private static errorBody(path: string, status: number, message: any): any {
         return {
             timestamp: (new Date().toISOString()),
             status: status,
