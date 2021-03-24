@@ -15,6 +15,15 @@ export class TypeormProfileQueryService implements ProfileQueryService {
         this.repository = repository;
     }
 
+    getIdNumberList(): Promise<number[] | undefined> {
+        return this.repository.query('SELECT id_number FROM joiner.profile')
+            .then<number[]>((value) => {
+                var array: any[] = value;
+                console.log(JSON.stringify(array));
+                return array.map(item => item.id_number);
+            });
+    }
+
     checkIdNumberDoesNotExists(idNumber: number, exceptIdNumber?: number): Promise<void> {
         return this.repository.find({ where: { idNumber: idNumber }})
             .then((profiles) => profiles.filter((value) => !(exceptIdNumber) || value.idNumber !== exceptIdNumber).length)

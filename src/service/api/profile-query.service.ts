@@ -5,4 +5,5 @@ export interface ProfileQueryService {
     checkIdNumberDoesNotExists(idNumber: number, exceptIdNumber?: number): Promise<void>
 
     getByIdNumber(idNumber: number): Promise<Profile | undefined>;
+    getIdNumberList(): Promise<number[] | undefined>;
 }
