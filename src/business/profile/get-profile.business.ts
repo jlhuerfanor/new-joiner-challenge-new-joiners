@@ -16,4 +16,8 @@ export class GetProfileBusiness {
     public getByIdNumber(idNumber: number): Promise<Profile | undefined> {
         return this.profileQueryService.getByIdNumber(idNumber);
     }
+
+    public getIdNumberList() : Promise<number[] |undefined> {
+        return this.profileQueryService.getIdNumberList();
+    }
 }
